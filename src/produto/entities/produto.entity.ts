@@ -6,15 +6,15 @@ export class Produto {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 60 })
+  @Column()
   descricao: string;
 
-  @Column('decimal', { precision: 13, scale: 3, nullable: true })
-  custo: number;
-
-  @Column({ nullable: true })
+  @Column()
   imagem: string;
 
-  @OneToMany(() => ProdutoLoja, (pl) => pl.produto, { cascade: true })
-  precos: ProdutoLoja[];
+  @Column('decimal')
+  custo: number;
+
+  @OneToMany(() => ProdutoLoja, (produtoLoja) => produtoLoja.produto)
+  produtosLoja: ProdutoLoja[];
 }

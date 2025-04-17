@@ -1,19 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Produto } from '../../produto/entities/produto.entity';
 import { Loja } from '../../loja/entities/loja.entity';
 
 @Entity()
-@Unique(['produto', 'loja']) // só 1 preço por loja
 export class ProdutoLoja {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Produto, (produto) => produto.precos, { onDelete: 'CASCADE' })
+  @Column('decimal')
+  precoVenda: number;
+
+  @ManyToOne(() => Produto, (produto) => produto.produtosLoja)
   produto: Produto;
 
-  @ManyToOne(() => Loja, (loja) => loja.precos)
+  @ManyToOne(() => Loja, (loja) => loja.produtosLoja)
   loja: Loja;
-
-  @Column('decimal', { precision: 13, scale: 3 })
-  precoVenda: number;
 }
